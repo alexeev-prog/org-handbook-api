@@ -4,16 +4,14 @@ import sys
 sys.path.insert(0, os.path.abspath("."))
 sys.path.insert(0, os.path.abspath(".."))
 sys.path.insert(0, os.path.abspath(os.path.join("..", "..")))
-sys.path.insert(0, os.path.abspath("../src"))
-sys.path.insert(0, os.path.abspath("src"))
-sys.path.insert(0, os.path.abspath("../src/orghandbookapi"))
-sys.path.insert(0, os.path.abspath("src/orghandbookapi"))
+sys.path.insert(0, os.path.abspath("../orghandbookapi"))
+sys.path.insert(0, os.path.abspath("orghandbookapi"))
 
 project = "org-handbook-api"
 author = "alexeev-prog"
 version = "0.1.0"
 release = "0.1"
-project_copyright = "2025, Alexeev Bronislaw"
+project_copyright = "2025, Alexeev Bronislav"
 
 autodoc_default_options = {
     "members": True,

@@ -1,3 +1,9 @@
+commit 1491526c0c9fd308ed84addd6095219905df1415
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Mon Oct 20 22:31:56 2025 +0700
+
+    update structure and readme
+
 commit 3ca37dc42c2df0cdc33ff314b9a63f3c2c1ae3bd
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Mon Oct 20 22:20:56 2025 +0700

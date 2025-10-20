@@ -1,0 +1,59 @@
+orghandbookapi package
+======================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   orghandbookapi.database
+   orghandbookapi.routers
+
+Submodules
+----------
+
+orghandbookapi.app module
+-------------------------
+
+.. automodule:: orghandbookapi.app
+   :members:
+   :private-members:
+   :show-inheritance:
+   :undoc-members:
+
+orghandbookapi.config module
+----------------------------
+
+.. automodule:: orghandbookapi.config
+   :members:
+   :private-members:
+   :show-inheritance:
+   :undoc-members:
+
+orghandbookapi.dependencies module
+----------------------------------
+
+.. automodule:: orghandbookapi.dependencies
+   :members:
+   :private-members:
+   :show-inheritance:
+   :undoc-members:
+
+orghandbookapi.loader module
+----------------------------
+
+.. automodule:: orghandbookapi.loader
+   :members:
+   :private-members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: orghandbookapi
+   :members:
+   :private-members:
+   :show-inheritance:
+   :undoc-members:
