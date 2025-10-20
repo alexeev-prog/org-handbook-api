@@ -1,3 +1,9 @@
+commit 3ca37dc42c2df0cdc33ff314b9a63f3c2c1ae3bd
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Mon Oct 20 22:20:56 2025 +0700
+
+    add plug for tests
+
 commit eeaeb7d03fa5f4223ce2ff989878847f898caab5
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Mon Oct 20 22:12:29 2025 +0700
