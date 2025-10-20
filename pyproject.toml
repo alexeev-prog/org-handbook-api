@@ -1,0 +1,28 @@
+[project]
+name = "org-handbook-api"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "alembic>=1.17.0",
+    "asyncpg>=0.30.0",
+    "dishka>=1.7.2",
+    "fastapi>=0.119.1",
+    "psycopg2-binary>=2.9.11",
+    "sqlalchemy>=2.0.44",
+]
+
+[dependency-groups]
+dev = [
+    "furo>=2025.9.25",
+    "mutmut>=3.3.1",
+    "mypy>=1.18.2",
+    "nox>=2025.10.16",
+    "pytest-coverage>=0.0",
+    "pytest-randomly>=4.0.1",
+    "pytest-sugar>=1.1.1",
+    "pytest-xdist>=3.8.0",
+    "ruff>=0.14.1",
+    "sphinx>=8.2.3",
+]
