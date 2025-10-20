@@ -10,7 +10,11 @@ dependencies = [
     "dishka>=1.7.2",
     "fastapi>=0.119.1",
     "psycopg2-binary>=2.9.11",
+    "pydantic>=2.12.3",
+    "python-dotenv>=1.1.1",
     "sqlalchemy>=2.0.44",
+    "toml>=0.10.2",
+    "uvicorn>=0.38.0",
 ]
 
 [dependency-groups]
