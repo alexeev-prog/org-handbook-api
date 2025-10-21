@@ -7,7 +7,7 @@ from fastapi import Depends, FastAPI, Header, HTTPException
 from orghandbookapi.database.database import db_manager, url
 from orghandbookapi.database.models.base import Base
 from orghandbookapi.loader import config
-from orghandbookapi.routers.v1 import activities, buildings, organizations
+from orghandbookapi.routers import api_router
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(current_dir)
@@ -39,21 +39,7 @@ async def verify_api_key(x_api_key: str = Header(...)):
 
 # Подключение роутеров
 app.include_router(
-    organizations.router,
-    prefix="/api/v1/organizations",
-    tags=["organizations"],
-    dependencies=[Depends(verify_api_key)],
-)
-app.include_router(
-    buildings.router,
-    prefix="/api/v1/buildings",
-    tags=["buildings"],
-    dependencies=[Depends(verify_api_key)],
-)
-app.include_router(
-    activities.router,
-    prefix="/api/v1/activities",
-    tags=["activities"],
+    api_router,
     dependencies=[Depends(verify_api_key)],
 )
 
