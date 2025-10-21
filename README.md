@@ -32,8 +32,15 @@
     <img src="https://raw.githubusercontent.com/alexeev-prog/org-handbook-api/refs/heads/main/docs/pallet-0.png">
 </p>
 
+Org-Handbook-API - это RESTful API для справочника организаций со следующим функционалом:
 
-## License & Support
+1. Модель Организации, Здания и Деятельность;
+2. Аутентификация через статичный токен;
+3. CRUD методы для работы с моделями;
+
+Проект сделан на FastAPI, Pydantic, SQLAlchemy, Dishka, Alembic.
+
+## Лицензия и поддержка
 
 Данный проект лицензирован под **GNU GPL 3** - просмотрите файл лицензии [LICENSE](https://github.com/alexeev-prog/configdoctor/blob/main/LICENSE). Для коммерческого или прочих вариантов использования напишите на почту [alexeev.dev@mail.ru](mailto:alexeev.dev@mail.ru).
 
