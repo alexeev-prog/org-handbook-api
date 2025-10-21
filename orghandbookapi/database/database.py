@@ -12,15 +12,15 @@ from sqlalchemy.ext.asyncio import (
 
 from orghandbookapi.loader import config
 
-url = config.database.url_format.format(
-    host=config.database.host,
-    port=config.database.port,
-    name=config.database.name,
-    user=config.database.user,
-    password=config.database.password,
-)
+# url = config.database.url_format.format(
+#     host=config.database.host,
+#     port=config.database.port,
+#     name=config.database.name,
+#     user=config.database.user,
+#     password=config.database.password,
+# )
 
-# url = "sqlite+aiosqlite:///data/sinwinapi.db"
+url = "sqlite+aiosqlite:///data/orghandbookapi.db"
 
 
 class DatabaseSessionManager:

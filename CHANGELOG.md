@@ -1,3 +1,15 @@
+commit 903eec1f68712f552c346fd7c102635b9cd68bdc
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Tue Oct 21 21:27:00 2025 +0700
+
+    update docs workflow and noxfile
+
+commit 7dfe660874fe597af6305e6322f8c55a8a54bf91
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Tue Oct 21 21:24:32 2025 +0700
+
+    update database models, application, config model and add alembic
+
 commit a0a671eb40422602b563c9ed06242ab28c0b0010
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Tue Oct 21 20:37:53 2025 +0700

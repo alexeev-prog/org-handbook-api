@@ -32,13 +32,14 @@ target_metadata = Base.metadata
 
 def get_database_url():
     """Get database URL from our config"""
-    return config.database.url_format.format(
-        host=config.database.host,
-        port=config.database.port,
-        name=config.database.name,
-        user=config.database.user,
-        password=config.database.password,
-    )
+    # return config.database.url_format.format(
+    #     host=config.database.host,
+    #     port=config.database.port,
+    #     name=config.database.name,
+    #     user=config.database.user,
+    #     password=config.database.password,
+    # )
+    return 'sqlite+aiosqlite:///data/orghandbookapi.db'
 
 
 def run_migrations_offline() -> None:
