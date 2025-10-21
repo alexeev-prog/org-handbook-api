@@ -1,0 +1,15 @@
+[run]
+host="0.0.0.0"
+port=8000
+
+[database]
+host = "postgres"
+port = 5432
+name = "orghandbookapi"
+user = "admin"
+password = "8a3843e5ca1da97079290de3"
+url_format = "postgresql+asyncpg://{user}:{password}@{host}:{port}/{name}"
+
+[security]
+api_key = "secret-static-api-key"
+api_key_header = "X-API-Key"

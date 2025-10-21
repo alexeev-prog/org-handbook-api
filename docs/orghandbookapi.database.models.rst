@@ -13,6 +13,15 @@ orghandbookapi.database.models.activity module
    :show-inheritance:
    :undoc-members:
 
+orghandbookapi.database.models.base module
+------------------------------------------
+
+.. automodule:: orghandbookapi.database.models.base
+   :members:
+   :private-members:
+   :show-inheritance:
+   :undoc-members:
+
 orghandbookapi.database.models.building module
 ----------------------------------------------
 
@@ -26,6 +35,15 @@ orghandbookapi.database.models.organization module
 --------------------------------------------------
 
 .. automodule:: orghandbookapi.database.models.organization
+   :members:
+   :private-members:
+   :show-inheritance:
+   :undoc-members:
+
+orghandbookapi.database.models.repositories module
+--------------------------------------------------
+
+.. automodule:: orghandbookapi.database.models.repositories
    :members:
    :private-members:
    :show-inheritance:
