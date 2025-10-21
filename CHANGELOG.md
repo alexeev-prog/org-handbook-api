@@ -1,3 +1,9 @@
+commit a0a671eb40422602b563c9ed06242ab28c0b0010
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Tue Oct 21 20:37:53 2025 +0700
+
+    update route system and add validation schemas
+
 commit 3471f959e0c0762f3fce9608c11208d375d5ee39
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Tue Oct 21 20:20:30 2025 +0700

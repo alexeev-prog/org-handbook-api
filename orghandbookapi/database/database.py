@@ -24,23 +24,11 @@ url = config.database.url_format.format(
 
 
 class DatabaseSessionManager:
-    """Менеджер сессий баз данных"""
-
     def __init__(self):
-        """Инициализация класса"""
-        # Движок, в данном случае - асинхронный
         self._engine: Optional[AsyncEngine] = None
-        # Создатель сессий
         self._sessionmaker: Optional[async_sessionmaker[AsyncSession]] = None
 
     def init(self, db_url: str):
-        """
-        Инициализация сессий базы данных
-
-        Args:
-            db_url (str): путь до базы данных
-
-        """
         if "postgresql" in db_url:
             connect_args = {
                 "statement_cache_size": 0,
@@ -48,8 +36,6 @@ class DatabaseSessionManager:
             }
         else:
             connect_args = {"check_same_thread": False}
-
-        # Создание движка и создателя сессий
 
         self._engine = create_async_engine(
             url=db_url, pool_pre_ping=True, connect_args=connect_args
@@ -59,7 +45,6 @@ class DatabaseSessionManager:
         )
 
     async def close(self):
-        """Закрытие сессии базы данных"""
         if self._engine is None:
             return
 
@@ -69,19 +54,6 @@ class DatabaseSessionManager:
 
     @contextlib.asynccontextmanager
     async def session(self) -> AsyncIterator[AsyncSession]:
-        """
-        Контекстный менеджер сессии (позволяет получить доступ к ней)
-
-        Raises:
-            IOError: В случае если база данных не инициализирована
-
-        Returns:
-            AsyncIterator[AsyncSession]: асинхронный итератор
-
-        Yields:
-            Iterator[AsyncIterator[AsyncSession]]: асинхронный итератор сессии
-
-        """
         if self._sessionmaker is None:
             raise OSError("DatabaseSessionManager is not initialized")
 
@@ -94,19 +66,6 @@ class DatabaseSessionManager:
 
     @contextlib.asynccontextmanager
     async def connect(self) -> AsyncIterator[AsyncConnection]:
-        """
-        Контекстный менеджер подключения
-
-        Raises:
-            IOError: база данных не инициализирована
-
-        Returns:
-            AsyncIterator[AsyncConnection]: асинхронный итератор
-
-        Yields:
-            Iterator[AsyncIterator[AsyncConnection]]: асинхронный итератор подключения
-
-        """
         if self._engine is None:
             raise OSError("DatabaseSessionManager is not initialized")
 

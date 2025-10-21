@@ -1,5 +1,5 @@
-from sqlalchemy import Integer, MetaData, String
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy import MetaData
+from sqlalchemy.orm import DeclarativeBase
 
 
 class Base(DeclarativeBase):
@@ -12,9 +12,3 @@ class Base(DeclarativeBase):
             "pk": "pk_%(table_name)s",
         }
     )
-
-
-str_uniq = Mapped[str] = mapped_column(String, unique=True, index=True)
-str_pk = Mapped[int] = mapped_column(Integer, primary_key=True)
-int_pk = Mapped[int] = mapped_column(Integer, primary_key=True)
-str_null_true = Mapped[str | None] = mapped_column(String, nullable=True)

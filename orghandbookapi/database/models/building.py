@@ -1,16 +1,22 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from orghandbookapi.database.models.base import Base, int_pk
+from orghandbookapi.database.models.base import Base
 
 
 class Building(Base):
     __tablename__ = "Buildings"
 
-    id: Mapped[int_pk]
+    id: Mapped[int] = mapped_column(primary_key=True)
     address: Mapped[str] = mapped_column(nullable=False)
     longitude: Mapped[float] = mapped_column(nullable=False)
     latitude: Mapped[float] = mapped_column(nullable=False)
 
     organizations: Mapped[list["Organization"]] = relationship(  # noqa: F821
-        "Organization", back_populates="building"
-    )
+        back_populates="building"
+    )  # noqa: F821
+
+    def __str__(self):
+        return f"Building(id={self.id}, address={self.address!r})"
+
+    def __repr__(self):
+        return str(self)

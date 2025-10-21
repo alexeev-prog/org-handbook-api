@@ -3,13 +3,13 @@ from typing import List, Optional
 from sqlalchemy import ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from .base import Base, int_pk
+from .base import Base
 
 
 class Activity(Base):
     __tablename__ = "activities"
 
-    id: Mapped[int_pk]
+    id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String, nullable=False)
     parent_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("activities.id"), nullable=True
