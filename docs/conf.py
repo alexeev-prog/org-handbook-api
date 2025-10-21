@@ -1,42 +1,52 @@
-# Configuration file for the Sphinx documentation builder.
-#
-# For the full list of built-in configuration values, see the documentation:
-# https://www.sphinx-doc.org/en/master/usage/configuration.html
-
-# -- Path setup --------------------------------------------------------------
-
 import os
 import sys
-sys.path.insert(0, '/home/alexeev/Desktop/Projects/org-handbook-api/orghandbookapi')
 
-# -- Project information -----------------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
+sys.path.insert(0, os.path.abspath("."))
+sys.path.insert(0, os.path.abspath(".."))
+sys.path.insert(0, os.path.abspath(os.path.join("..", "..")))
+sys.path.insert(0, os.path.abspath("../orghandbookapi"))
+sys.path.insert(0, os.path.abspath("orghandbookapi"))
 
-project = 'orghandbookapi'
-copyright = '2025, Author'
-author = 'Author'
+project = "orghandbookapi"
+author = "alexeev-prog"
+version = "0.1.0"
+release = "0.1"
+project_copyright = "2025, Alexeev Bronislaw"
 
-# -- General configuration ---------------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
+autodoc_default_options = {
+    "members": True,
+    "undoc-members": True,
+    "private-members": True,
+    "special-members": "__init__",
+}
 
 extensions = [
-    'sphinx.ext.autodoc',
-    'sphinx.ext.viewcode',
-    'sphinx.ext.todo',
+    "sphinx.ext.autodoc",  # autodoc from docstrings
+    "sphinx.ext.viewcode",  # links to source code
+    "sphinx.ext.napoleon",  # support google and numpy docs style
+    "sphinx.ext.todo",  # support TODO
+    "sphinx.ext.coverage",  # check docs coverage
+    "sphinx.ext.ifconfig",  # directives in docs
+    "sphinx.ext.autosummary",  # generating summary for code
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.githubpages",
 ]
 
-templates_path = ['_templates']
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+pygments_style = "gruvbox-dark"
 
-language = 'en'
+html_theme = "furo"  # theme
+html_static_path = ["_static"]  # static dir
+todo_include_todos = True  # include todo in docs
+auto_doc_default_options = {"autosummary": True}
 
-# -- Options for HTML output -------------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
+autodoc_mock_imports = []
 
-html_theme = 'alabaster'
-html_static_path = ['_static']
 
-# -- Options for todo extension ----------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/extensions/todo.html#configuration
+def skip(app, what, name, obj, would_skip, options):
+    if name == "__init__":
+        return False
+    return would_skip
 
-todo_include_todos = True
+
+def setup(app):
+    app.connect("autodoc-skip-member", skip)

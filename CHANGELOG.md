@@ -1,3 +1,23 @@
+commit 68e17fcf0f66e0759364ea8f327e4a0b696d5920
+Merge: 36cf1a7 ee81733
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Tue Oct 21 20:18:19 2025 +0700
+
+    Merge pull request #1 from alexeev-prog/dependabot/github_actions/actions/checkout-5
+
+commit ee817333ecba5606a3636851024502ad145bc8a0
+Merge: 995c922 36cf1a7
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Tue Oct 21 20:17:47 2025 +0700
+
+    Merge branch 'main' into dependabot/github_actions/actions/checkout-5
+
+commit 36cf1a7d5587d6db8b15eef8c390302b246ef4c7
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Tue Oct 21 20:15:30 2025 +0700
+
+    update database models repositories, update docs
+
 commit 3284d632a08ab1cfadf104c3e3f32ebb7716480b
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Tue Oct 21 19:51:30 2025 +0700
@@ -21,6 +41,27 @@ Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Tue Oct 21 17:35:05 2025 +0700
 
     add configuration loader with validating, update readme
+
+commit 995c92217d908d99c204e521248f348a0358a453
+Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+Date:   Mon Oct 20 15:52:04 2025 +0000
+
+    Bump actions/checkout from 4 to 5
+    
+    Bumps [actions/checkout](https://github.com/actions/checkout) from 4 to 5.
+    - [Release notes](https://github.com/actions/checkout/releases)
+    - [Changelog](https://github.com/actions/checkout/blob/main/CHANGELOG.md)
+    - [Commits](https://github.com/actions/checkout/compare/v4...v5)
+    
+    ---
+    updated-dependencies:
+    - dependency-name: actions/checkout
+      dependency-version: '5'
+      dependency-type: direct:production
+      update-type: version-update:semver-major
+    ...
+    
+    Signed-off-by: dependabot[bot] <support@github.com>
 
 commit 98c2cef8a1d2d0852ded79340dbe29e437251ffa
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
