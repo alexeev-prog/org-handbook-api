@@ -22,10 +22,10 @@ orghandbookapi.app module
    :show-inheritance:
    :undoc-members:
 
-orghandbookapi.config module
-----------------------------
+orghandbookapi.config\_loader module
+------------------------------------
 
-.. automodule:: orghandbookapi.config
+.. automodule:: orghandbookapi.config_loader
    :members:
    :private-members:
    :show-inheritance:
