@@ -9,7 +9,6 @@ from alembic import context
 
 # Import your models and configuration
 from orghandbookapi.database.models.base import Base
-from orghandbookapi.loader import config
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -39,7 +38,7 @@ def get_database_url():
     #     user=config.database.user,
     #     password=config.database.password,
     # )
-    return 'sqlite+aiosqlite:///data/orghandbookapi.db'
+    return "sqlite+aiosqlite:///data/orghandbookapi.db"
 
 
 def run_migrations_offline() -> None:

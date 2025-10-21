@@ -34,3 +34,13 @@ dev = [
     "ruff>=0.14.1",
     "sphinx>=8.2.3",
 ]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["orghandbookapi"]
+
+[tool.setuptools.package-dir]
+"orghandbookapi" = "orghandbookapi"

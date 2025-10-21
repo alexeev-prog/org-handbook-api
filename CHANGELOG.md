@@ -1,3 +1,9 @@
+commit ff1683765fccccdd510d94f36c7ffc79b0134c8d
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Tue Oct 21 21:33:36 2025 +0700
+
+    add test sqlite database, add docker container configs
+
 commit 903eec1f68712f552c346fd7c102635b9cd68bdc
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Tue Oct 21 21:27:00 2025 +0700
