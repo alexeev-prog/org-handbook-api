@@ -1,3 +1,9 @@
+commit 2a58d746a780e1e84d1dfdd04341700c3af1b139
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Tue Oct 21 22:57:05 2025 +0700
+
+    add routers (api/v1/xxx)
+
 commit 3cb464e0f5dc6d80f09e98f36aa7d1d329783055
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Tue Oct 21 21:41:56 2025 +0700

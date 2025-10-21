@@ -12,7 +12,7 @@ from orghandbookapi.database.models.building import Building
 from orghandbookapi.database.models.organization import Organization
 
 
-async def commit_procees_session(
+async def commit_process_session(
     session: AsyncSession, candidate: Any = None, flush: bool = False
 ):
     if flush:
@@ -72,7 +72,7 @@ class OrganizationRepository(CRUDRepository):
             select(Organization)
             .options(
                 selectinload(Organization.building),
-                selectinload(Organization.phones),
+                selectinload(Organization.phonenumbers),
                 selectinload(Organization.activities),
             )
             .where(Organization.id == id)
@@ -84,7 +84,7 @@ class OrganizationRepository(CRUDRepository):
         organization = await cls.get(session, id)
         if organization:
             await session.delete(organization)
-            await commit_procees_session(session)
+            await commit_process_session(session)
 
     @classmethod
     async def update(cls, session: AsyncSession, model: BaseModel):
@@ -94,14 +94,14 @@ class OrganizationRepository(CRUDRepository):
             .where(Organization.id == update_data["id"])
             .values(**{k: v for k, v in update_data.items() if k != "id"})
         )
-        await commit_procees_session(session)
+        await commit_process_session(session)
 
     @classmethod
     async def create(cls, session: AsyncSession, model: BaseModel) -> Organization:
         organization_data = model.dict()
         organization = Organization(**organization_data)
         session.add(organization)
-        await commit_procees_session(session, organization)
+        await commit_process_session(session, organization)
         return organization
 
     @classmethod
@@ -117,7 +117,7 @@ class OrganizationRepository(CRUDRepository):
             select(Organization)
             .options(
                 selectinload(Organization.building),
-                selectinload(Organization.phones),
+                selectinload(Organization.phonenumbers),
                 selectinload(Organization.activities),
             )
             .where(Organization.building_id == building_id)
@@ -146,7 +146,7 @@ class OrganizationRepository(CRUDRepository):
             select(Organization)
             .options(
                 selectinload(Organization.building),
-                selectinload(Organization.phones),
+                selectinload(Organization.phonenumbers),
                 selectinload(Organization.activities),
             )
             .join(Organization.activities)
@@ -162,7 +162,7 @@ class OrganizationRepository(CRUDRepository):
             select(Organization)
             .options(
                 selectinload(Organization.building),
-                selectinload(Organization.phones),
+                selectinload(Organization.phonenumbers),
                 selectinload(Organization.activities),
             )
             .where(Organization.name.ilike(f"%{name}%"))
@@ -187,7 +187,7 @@ class OrganizationRepository(CRUDRepository):
             select(Organization)
             .options(
                 selectinload(Organization.building),
-                selectinload(Organization.phones),
+                selectinload(Organization.phonenumbers),
                 selectinload(Organization.activities),
             )
             .join(Organization.building)
@@ -208,7 +208,7 @@ class OrganizationRepository(CRUDRepository):
             select(Organization)
             .options(
                 selectinload(Organization.building),
-                selectinload(Organization.phones),
+                selectinload(Organization.phonenumbers),
                 selectinload(Organization.activities),
             )
             .join(Organization.building)
@@ -242,7 +242,7 @@ class BuildingRepository(CRUDRepository):
         building = await cls.get(session, id)
         if building:
             await session.delete(building)
-            await commit_procees_session(session)
+            await commit_process_session(session)
 
     @classmethod
     async def update(cls, session: AsyncSession, model: BaseModel):
@@ -252,14 +252,14 @@ class BuildingRepository(CRUDRepository):
             .where(Building.id == update_data["id"])
             .values(**{k: v for k, v in update_data.items() if k != "id"})
         )
-        await commit_procees_session(session)
+        await commit_process_session(session)
 
     @classmethod
     async def create(cls, session: AsyncSession, model: BaseModel) -> Building:
         building_data = model.dict()
         building = Building(**building_data)
         session.add(building)
-        await commit_procees_session(session, building)
+        await commit_process_session(session, building)
         return building
 
     @classmethod
@@ -294,7 +294,7 @@ class ActivityRepository(CRUDRepository):
         activity = await cls.get(session, id)
         if activity:
             await session.delete(activity)
-            await commit_procees_session(session)
+            await commit_process_session(session)
 
     @classmethod
     async def update(cls, session: AsyncSession, model: BaseModel):
@@ -304,14 +304,14 @@ class ActivityRepository(CRUDRepository):
             .where(Activity.id == update_data["id"])
             .values(**{k: v for k, v in update_data.items() if k != "id"})
         )
-        await commit_procees_session(session)
+        await commit_process_session(session)
 
     @classmethod
     async def create(cls, session: AsyncSession, model: BaseModel) -> Activity:
         activity_data = model.dict()
         activity = Activity(**activity_data)
         session.add(activity)
-        await commit_procees_session(session, activity)
+        await commit_process_session(session, activity)
         return activity
 
     @classmethod
