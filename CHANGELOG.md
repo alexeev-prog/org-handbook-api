@@ -1,3 +1,9 @@
+commit 7f567ee37bc20473aa3736b38d274b250233ffd8
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Tue Oct 21 17:35:05 2025 +0700
+
+    add configuration loader with validating, update readme
+
 commit 98c2cef8a1d2d0852ded79340dbe29e437251ffa
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Mon Oct 20 22:33:53 2025 +0700

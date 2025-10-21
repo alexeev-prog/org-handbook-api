@@ -1,4 +1,5 @@
 from pydantic import BaseSettings
+
 from orghandbookapi.config_loader import ConfigReader, ConfigType
 
 
