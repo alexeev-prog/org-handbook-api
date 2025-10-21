@@ -1,35 +1,13 @@
 orghandbookapi.routers package
 ==============================
 
-Submodules
-----------
+Subpackages
+-----------
 
-orghandbookapi.routers.activity module
---------------------------------------
+.. toctree::
+   :maxdepth: 4
 
-.. automodule:: orghandbookapi.routers.activity
-   :members:
-   :private-members:
-   :show-inheritance:
-   :undoc-members:
-
-orghandbookapi.routers.building module
---------------------------------------
-
-.. automodule:: orghandbookapi.routers.building
-   :members:
-   :private-members:
-   :show-inheritance:
-   :undoc-members:
-
-orghandbookapi.routers.organization module
-------------------------------------------
-
-.. automodule:: orghandbookapi.routers.organization
-   :members:
-   :private-members:
-   :show-inheritance:
-   :undoc-members:
+   orghandbookapi.routers.v1
 
 Module contents
 ---------------

@@ -1,3 +1,9 @@
+commit 3471f959e0c0762f3fce9608c11208d375d5ee39
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Tue Oct 21 20:20:30 2025 +0700
+
+    update docs workflow
+
 commit 68e17fcf0f66e0759364ea8f327e4a0b696d5920
 Merge: 36cf1a7 ee81733
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
