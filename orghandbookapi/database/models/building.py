@@ -1,5 +1,6 @@
-from orghandbookapi.database.models.base import Base, int_pk
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from orghandbookapi.database.models.base import Base, int_pk
 
 
 class Building(Base):

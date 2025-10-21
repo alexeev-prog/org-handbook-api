@@ -40,6 +40,15 @@ orghandbookapi.database.models.organization module
    :show-inheritance:
    :undoc-members:
 
+orghandbookapi.database.models.repositories module
+--------------------------------------------------
+
+.. automodule:: orghandbookapi.database.models.repositories
+   :members:
+   :private-members:
+   :show-inheritance:
+   :undoc-members:
+
 Module contents
 ---------------
 

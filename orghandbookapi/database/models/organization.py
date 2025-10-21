@@ -1,8 +1,9 @@
-from orghandbookapi.database.models.base import Base, int_pk
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from orghandbookapi.database.models.building import Building
+
 from orghandbookapi.database.models.activity import Activity
+from orghandbookapi.database.models.base import Base, int_pk
+from orghandbookapi.database.models.building import Building
 
 
 class Organization(Base):

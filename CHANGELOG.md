@@ -1,3 +1,9 @@
+commit 3284d632a08ab1cfadf104c3e3f32ebb7716480b
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Tue Oct 21 19:51:30 2025 +0700
+
+    update database models
+
 commit 869b0a5a9f60e806e9a28b431e892d2f7ab03ff5
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Tue Oct 21 17:59:00 2025 +0700
