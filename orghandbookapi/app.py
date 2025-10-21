@@ -1,5 +1,6 @@
 import os
 from contextlib import asynccontextmanager
+from datetime import datetime
 
 import uvicorn
 from fastapi import Depends, FastAPI, Header, HTTPException
@@ -37,11 +38,15 @@ async def verify_api_key(x_api_key: str = Header(...)):
     return x_api_key
 
 
-# Подключение роутеров
 app.include_router(
     api_router,
     dependencies=[Depends(verify_api_key)],
 )
+
+
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy", "timestamp": datetime.utcnow()}
 
 
 if __name__ == "__main__":

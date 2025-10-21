@@ -1,3 +1,9 @@
+commit 949b073b4a9f132d0835ceb3d8db3b4c80f76c64
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Tue Oct 21 23:08:17 2025 +0700
+
+    update codestyle and fix bugs, update docs
+
 commit 2a58d746a780e1e84d1dfdd04341700c3af1b139
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Tue Oct 21 22:57:05 2025 +0700
