@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 from pydantic import BaseModel
 
@@ -6,22 +6,28 @@ from orghandbookapi.database.models.organization import Organization
 
 
 class ActivityBase(BaseModel):
+    """Схема валидации базовой модели вида деятельности."""
+
     name: str
-    parent_id: Optional[int] = None
+    parent_id: int | None = None
     level: int = 0
 
 
 class ActivityCreate(ActivityBase):
-    pass
+    """Схема валидации создания модели вида деятельности."""
 
 
 class ActivityUpdate(BaseModel):
-    name: Optional[str] = None
-    parent_id: Optional[int] = None
-    level: Optional[int] = None
+    """Схема валидации обновления модели вида деятельности."""
+
+    name: str | None = None
+    parent_id: int | None = None
+    level: int | None = None
 
 
 class Activity(ActivityBase):
+    """Схема валидации модели вида деятельности."""
+
     id: int
 
     class Config:
@@ -29,13 +35,17 @@ class Activity(ActivityBase):
 
 
 class ActivityWithRelations(Activity):
+    """Схема валидации модели вида деятельности с отношениями."""  # noqa: RUF002
+
     parent: Optional["Activity"] = None
-    children: List["Activity"] = []
-    organizations: List[Organization]
+    children: list["Activity"] = []
+    organizations: list[Organization]
 
 
 class ActivityTree(Activity):
-    children: List["ActivityTree"] = []
+    """Схема валидации дерева моделей видов деятельности."""
+
+    children: list["ActivityTree"] = []
 
 
 ActivityWithRelations.update_forward_refs()

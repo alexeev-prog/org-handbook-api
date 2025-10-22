@@ -1,5 +1,3 @@
-from typing import List
-
 from dishka.integrations.fastapi import FromDishka
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -15,7 +13,7 @@ from orghandbookapi.schemas.building import (
 building_router = APIRouter()
 
 
-@building_router.get("/", response_model=List[Building])
+@building_router.get("/", response_model=list[Building])
 async def get_buildings(
     skip: int = 0, limit: int = 100, session: FromDishka[AsyncSession] = Depends()
 ):

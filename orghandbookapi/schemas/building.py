@@ -1,27 +1,31 @@
-from typing import List, Optional
-
 from pydantic import BaseModel
 
 from orghandbookapi.database.models.organization import Organization
 
 
 class BuildingBase(BaseModel):
+    """Схема валидации базовой модели здания."""
+
     address: str
     longitude: float
     latitude: float
 
 
 class BuildingCreate(BuildingBase):
-    pass
+    """Схема валидации создания модели здания."""
 
 
 class BuildingUpdate(BaseModel):
-    address: Optional[str] = None
-    longitude: Optional[float] = None
-    latitude: Optional[float] = None
+    """Схема валидации обновления модели здания."""
+
+    address: str | None = None
+    longitude: float | None = None
+    latitude: float | None = None
 
 
 class Building(BuildingBase):
+    """Схема валидации модели здания."""
+
     id: int
 
     class Config:
@@ -29,4 +33,6 @@ class Building(BuildingBase):
 
 
 class BuildingWithRelations(Building):
-    organizations: List[Organization]
+    """Схема валидации модели здания с отношениями."""  # noqa: RUF002
+
+    organizations: list[Organization]

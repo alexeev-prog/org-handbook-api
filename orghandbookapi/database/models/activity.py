@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 from sqlalchemy import ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -11,7 +11,7 @@ class Activity(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String, nullable=False)
-    parent_id: Mapped[Optional[int]] = mapped_column(
+    parent_id: Mapped[int | None] = mapped_column(
         ForeignKey("activities.id"), nullable=True
     )
     level: Mapped[int] = mapped_column(Integer, default=0)
@@ -19,8 +19,8 @@ class Activity(Base):
     parent: Mapped[Optional["Activity"]] = relationship(
         remote_side=[id], back_populates="children"
     )
-    children: Mapped[List["Activity"]] = relationship(back_populates="parent")
-    organizations: Mapped[List["Organization"]] = relationship(  # noqa: F821
+    children: Mapped[list["Activity"]] = relationship(back_populates="parent")
+    organizations: Mapped[list["Organization"]] = relationship(  # noqa: F821
         "Organization", back_populates="activities"
     )
 

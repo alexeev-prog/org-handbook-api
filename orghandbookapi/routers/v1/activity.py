@@ -1,5 +1,3 @@
-from typing import List, Optional
-
 from dishka.integrations.fastapi import FromDishka
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -16,7 +14,7 @@ from orghandbookapi.schemas.activity import (
 activity_router = APIRouter()
 
 
-@activity_router.get("/", response_model=List[Activity])
+@activity_router.get("/", response_model=list[Activity])
 async def get_activities(
     skip: int = 0, limit: int = 100, session: FromDishka[AsyncSession] = Depends()
 ):
@@ -60,9 +58,8 @@ async def delete_activity(
     return {"message": "Activity deleted"}
 
 
-@activity_router.get("/tree/{parent_id}", response_model=List[ActivityTree])
+@activity_router.get("/tree/{parent_id}", response_model=list[ActivityTree])
 async def get_activity_tree(
-    parent_id: Optional[int] = None, session: FromDishka[AsyncSession] = Depends()
+    parent_id: int | None = None, session: FromDishka[AsyncSession] = Depends()
 ):
-    activities = await ActivityRepository.get_tree(session, parent_id)
-    return activities
+    return await ActivityRepository.get_tree(session, parent_id)

@@ -24,7 +24,7 @@ class Organization(Base):
     )
     activities: Mapped[list["Activity"]] = relationship(  # noqa: F821
         secondary=organization_activity, back_populates="organizations"
-    )  # noqa: F821
+    )
 
     def __str__(self):
         return f"Organization(id={self.id}, name={self.legal_name!r})"

@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any, List, Optional
+from typing import Any
 
 from pydantic import BaseModel
 from sqlalchemy import func, select, update
@@ -27,12 +27,12 @@ async def commit_process_session(
 class CRUDRepository(ABC):
     @classmethod
     @abstractmethod
-    async def get(cls, session: AsyncSession, id: int) -> Optional[Base]:
+    async def get(cls, session: AsyncSession, id: int) -> Base | None:
         raise NotImplementedError
 
     @classmethod
     @abstractmethod
-    async def get_with_relations(cls, session: AsyncSession, id: int) -> Optional[Base]:
+    async def get_with_relations(cls, session: AsyncSession, id: int) -> Base | None:
         raise NotImplementedError
 
     @classmethod
@@ -52,13 +52,13 @@ class CRUDRepository(ABC):
 
     @classmethod
     @abstractmethod
-    async def get_all(cls, session: AsyncSession) -> List[Base]:
+    async def get_all(cls, session: AsyncSession) -> list[Base]:
         raise NotImplementedError
 
 
 class OrganizationRepository(CRUDRepository):
     @classmethod
-    async def get(cls, session: AsyncSession, id: int) -> Optional[Base]:
+    async def get(cls, session: AsyncSession, id: int) -> Base | None:
         result = await session.execute(
             select(Organization).where(Organization.id == id)
         )
@@ -67,7 +67,7 @@ class OrganizationRepository(CRUDRepository):
     @classmethod
     async def get_with_relations(
         cls, session: AsyncSession, id: int
-    ) -> Optional[Organization]:
+    ) -> Organization | None:
         result = await session.execute(
             select(Organization)
             .options(
@@ -105,14 +105,14 @@ class OrganizationRepository(CRUDRepository):
         return organization
 
     @classmethod
-    async def get_all(cls, session: AsyncSession) -> List[Organization]:
+    async def get_all(cls, session: AsyncSession) -> list[Organization]:
         result = await session.execute(select(Organization))
         return result.scalars().all()
 
     @classmethod
     async def get_by_building(
         cls, session: AsyncSession, building_id: int
-    ) -> List[Organization]:
+    ) -> list[Organization]:
         result = await session.execute(
             select(Organization)
             .options(
@@ -127,7 +127,7 @@ class OrganizationRepository(CRUDRepository):
     @classmethod
     async def get_by_activity(
         cls, session: AsyncSession, activity_id: int
-    ) -> List[Organization]:
+    ) -> list[Organization]:
         activities_cte = (
             select(Activity.id, Activity.parent_id, Activity.level)
             .where(Activity.id == activity_id)
@@ -157,7 +157,7 @@ class OrganizationRepository(CRUDRepository):
     @classmethod
     async def search_by_name(
         cls, session: AsyncSession, name: str
-    ) -> List[Organization]:
+    ) -> list[Organization]:
         result = await session.execute(
             select(Organization)
             .options(
@@ -172,7 +172,7 @@ class OrganizationRepository(CRUDRepository):
     @classmethod
     async def get_in_radius(
         cls, session: AsyncSession, lat: float, lon: float, radius_km: float
-    ) -> List[Organization]:
+    ) -> list[Organization]:
         distance = (
             func.acos(
                 func.sin(func.radians(lat)) * func.sin(func.radians(Building.latitude))
@@ -203,7 +203,7 @@ class OrganizationRepository(CRUDRepository):
         max_lat: float,
         min_lon: float,
         max_lon: float,
-    ) -> List[Organization]:
+    ) -> list[Organization]:
         result = await session.execute(
             select(Organization)
             .options(
@@ -222,14 +222,14 @@ class OrganizationRepository(CRUDRepository):
 
 class BuildingRepository(CRUDRepository):
     @classmethod
-    async def get(cls, session: AsyncSession, id: int) -> Optional[Base]:
+    async def get(cls, session: AsyncSession, id: int) -> Base | None:
         result = await session.execute(select(Building).where(Building.id == id))
         return result.scalar_one_or_none()
 
     @classmethod
     async def get_with_relations(
         cls, session: AsyncSession, id: int
-    ) -> Optional[Building]:
+    ) -> Building | None:
         result = await session.execute(
             select(Building)
             .options(selectinload(Building.organizations))
@@ -263,21 +263,21 @@ class BuildingRepository(CRUDRepository):
         return building
 
     @classmethod
-    async def get_all(cls, session: AsyncSession) -> List[Building]:
+    async def get_all(cls, session: AsyncSession) -> list[Building]:
         result = await session.execute(select(Building))
         return result.scalars().all()
 
 
 class ActivityRepository(CRUDRepository):
     @classmethod
-    async def get(cls, session: AsyncSession, id: int) -> Optional[Base]:
+    async def get(cls, session: AsyncSession, id: int) -> Base | None:
         result = await session.execute(select(Activity).where(Activity.id == id))
         return result.scalar_one_or_none()
 
     @classmethod
     async def get_with_relations(
         cls, session: AsyncSession, id: int
-    ) -> Optional[Activity]:
+    ) -> Activity | None:
         result = await session.execute(
             select(Activity)
             .options(
@@ -315,14 +315,14 @@ class ActivityRepository(CRUDRepository):
         return activity
 
     @classmethod
-    async def get_all(cls, session: AsyncSession) -> List[Activity]:
+    async def get_all(cls, session: AsyncSession) -> list[Activity]:
         result = await session.execute(select(Activity))
         return result.scalars().all()
 
     @classmethod
     async def get_tree(
-        cls, session: AsyncSession, parent_id: Optional[int] = None
-    ) -> List[Activity]:
+        cls, session: AsyncSession, parent_id: int | None = None
+    ) -> list[Activity]:
         if parent_id is None:
             result = await session.execute(
                 select(Activity).where(Activity.parent_id.is_(None))

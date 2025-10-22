@@ -1,6 +1,5 @@
 import contextlib
 from collections.abc import AsyncIterator
-from typing import Optional
 
 from sqlalchemy.ext.asyncio import (
     AsyncConnection,
@@ -25,8 +24,8 @@ url = "sqlite+aiosqlite:///data/orghandbookapi.db"
 
 class DatabaseSessionManager:
     def __init__(self):
-        self._engine: Optional[AsyncEngine] = None
-        self._sessionmaker: Optional[async_sessionmaker[AsyncSession]] = None
+        self._engine: AsyncEngine | None = None
+        self._sessionmaker: async_sessionmaker[AsyncSession] | None = None
 
     def init(self, db_url: str):
         if "postgresql" in db_url:

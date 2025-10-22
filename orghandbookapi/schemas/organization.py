@@ -1,5 +1,3 @@
-from typing import List, Optional
-
 from pydantic import BaseModel
 
 from orghandbookapi.database.models.activity import Activity
@@ -7,14 +5,18 @@ from orghandbookapi.database.models.building import Building
 
 
 class PhoneNumberBase(BaseModel):
+    """Схема валидации базовой модели номера телефона."""
+
     phone_number: str
 
 
 class PhoneNumberCreate(PhoneNumberBase):
-    pass
+    """Схема валидации создания модели номера телефона."""
 
 
 class PhoneNumber(PhoneNumberBase):
+    """Схема валидации модели номера телефона."""
+
     id: int
 
     class Config:
@@ -22,33 +24,43 @@ class PhoneNumber(PhoneNumberBase):
 
 
 class OrganizationBase(BaseModel):
+    """Схема валидации базовой модели организации."""
+
     legal_name: str
     building_id: int
 
 
 class OrganizationCreate(OrganizationBase):
-    phone_numbers: List[str]
-    activity_ids: List[int]
+    """Схема валидации создания модели организации."""
+
+    phone_numbers: list[str]
+    activity_ids: list[int]
 
 
 class OrganizationUpdate(BaseModel):
-    legal_name: Optional[str] = None
-    building_id: Optional[int] = None
-    phone_numbers: Optional[List[str]] = None
-    activity_ids: Optional[List[int]] = None
+    """Схема валидации обновления модели организации."""
+
+    legal_name: str | None = None
+    building_id: int | None = None
+    phone_numbers: list[str] | None = None
+    activity_ids: list[int] | None = None
 
 
 class Organization(OrganizationBase):
+    """Схема валидации модели организации."""
+
     id: int
     building: Building
-    phonenumbers: List[PhoneNumber]
-    activities: List[Activity]
+    phonenumbers: list[PhoneNumber]
+    activities: list[Activity]
 
     class Config:
         from_attributes = True
 
 
 class OrganizationWithRelations(Organization):
+    """Схема валидации модели организации с отношениями."""  # noqa: RUF002
+
     building: Building
-    phonenumbers: List[PhoneNumber]
-    activities: List[Activity]
+    phonenumbers: list[PhoneNumber]
+    activities: list[Activity]

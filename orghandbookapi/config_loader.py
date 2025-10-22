@@ -1,9 +1,3 @@
-"""
-Loader module for pyharborcli.
-
-This module have a functional for reading config files.
-"""
-
 from enum import Enum
 from pathlib import Path
 
@@ -13,7 +7,7 @@ import yaml
 
 
 class ConfigType(Enum):
-    """Project configuration types."""
+    """Типы конфигурационных файлов."""
 
     TOML = 0
     YAML = 1
@@ -22,13 +16,13 @@ class ConfigType(Enum):
 
 def detect_config_type_by_extension(extension: str) -> ConfigType:
     """
-    Detect config type by file extension.
+    Обнаружение типа конфигурации по расширению файла.
 
     Args:
-        extension: File extension string
+        extension (str): расширение файла
 
     Returns:
-        ConfigType: Detected config type (defaults to JSON)
+        ConfigType: тип конфигурации
 
     """
     cleaned_extension = extension.lower().lstrip(".")
@@ -44,13 +38,13 @@ def detect_config_type_by_extension(extension: str) -> ConfigType:
 
 def detect_config_type_by_filename(filename: str) -> ConfigType:
     """
-    Detect config type by filename.
+    Обнаружение типа конфигурации по файлу.
 
     Args:
-        filename: Full filename or path
+        filename (str): имя файла
 
     Returns:
-        ConfigType: Detected config type
+        ConfigType: тип конфигурации
 
     """
     extension = Path(filename).suffix.lstrip(".") or filename
@@ -58,34 +52,27 @@ def detect_config_type_by_filename(filename: str) -> ConfigType:
 
 
 class ConfigReader:
-    """Project configuration reader."""
+    """Класс, реализующий чтение конфигурационного файла."""
 
     def __init__(self, config_file: str, configtype: ConfigType = None):
         """
-        Constructs new instance.
+        Инициализация класса.
 
         Args:
-            config_file: Path to configuration file
-            configtype: Explicit config type (auto-detected if None)
+            config_file (str): файл конфигурации
+            configtype (ConfigType, optional): тип конфигурации. По умолчанию None.
 
         """
-        self.config_file = Path(config_file)
+        self.config_file: Path = Path(config_file)
 
         if configtype is None:
-            self.configtype = detect_config_type_by_filename(config_file)
+            self.configtype: ConfigType = detect_config_type_by_filename(config_file)
         else:
-            self.configtype = configtype
+            self.configtype: ConfigType = configtype
 
-        self.config = self._load_data_from_config()
+        self.config: dict[str, any] = self._load_data_from_config()
 
     def _load_data_from_config(self) -> dict:
-        """
-        Load configuration data from file.
-
-        Returns:
-            dict: loaded data as dictionary
-
-        """
         data = {}
 
         if not self.config_file.exists():

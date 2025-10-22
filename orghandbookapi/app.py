@@ -10,18 +10,38 @@ from orghandbookapi.database.models.base import Base
 from orghandbookapi.loader import config
 from orghandbookapi.routers import api_router
 
-current_dir = os.path.dirname(os.path.abspath(__file__))
-parent_dir = os.path.dirname(current_dir)
+current_dir = os.path.dirname(os.path.abspath(__file__))  # noqa: PTH100, PTH120
+parent_dir = os.path.dirname(current_dir)  # noqa: PTH120
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    """Функция для жизненого цикла приложения."""
     db_manager.init(url)
     async with db_manager.connect() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
     yield
     await db_manager.close()
+
+
+async def verify_api_key(x_api_key: str = Header(...)) -> str:
+    """
+    Верификация статичного токена API.
+
+    Args:
+        x_api_key (str, optional): Статичный токен для проверки.
+
+    Raises:
+        HTTPException: неверный API токен
+
+    Returns:
+        str: возвращает тот же API токен, если он верный.
+
+    """
+    if x_api_key != config.security.api_key:
+        raise HTTPException(status_code=401, detail="Invalid API key")
+    return x_api_key
 
 
 app = FastAPI(
@@ -32,21 +52,22 @@ app = FastAPI(
 )
 
 
-async def verify_api_key(x_api_key: str = Header(...)):
-    if x_api_key != config.security.api_key:
-        raise HTTPException(status_code=401, detail="Invalid API key")
-    return x_api_key
+@app.get("/health")
+async def health_check() -> dict[str, any]:
+    """
+    Маршрут для проверки работы API.
+
+    Returns:
+        dict[str, any]: ответ сервера
+
+    """
+    return {"status": "healthy", "timestamp": datetime.utcnow()}  # noqa: DTZ003
 
 
 app.include_router(
     api_router,
     dependencies=[Depends(verify_api_key)],
 )
-
-
-@app.get("/health")
-async def health_check():
-    return {"status": "healthy", "timestamp": datetime.utcnow()}
 
 
 if __name__ == "__main__":

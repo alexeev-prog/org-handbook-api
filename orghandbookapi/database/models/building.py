@@ -13,7 +13,7 @@ class Building(Base):
 
     organizations: Mapped[list["Organization"]] = relationship(  # noqa: F821
         back_populates="building"
-    )  # noqa: F821
+    )
 
     def __str__(self):
         return f"Building(id={self.id}, address={self.address!r})"
