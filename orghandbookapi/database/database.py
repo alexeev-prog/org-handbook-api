@@ -92,4 +92,3 @@ async def get_db_session() -> AsyncSession:
     """
     async with db_manager.session() as session:
         yield session
-

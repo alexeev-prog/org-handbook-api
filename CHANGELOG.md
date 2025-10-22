@@ -1,3 +1,9 @@
+commit 8a8104f2a9c7632561023f75f44f321f29e5e5c6
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Wed Oct 22 23:20:41 2025 +0700
+
+    remove dishka (dishka is over-engineering for this project) and fix dependencies, models and schemas
+
 commit ac4614d82676cd826d7fd222518c67641e2734cf
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Wed Oct 22 22:48:05 2025 +0700
