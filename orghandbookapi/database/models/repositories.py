@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Any
 
+from fastapi import HTTPException
 from pydantic import BaseModel
 from sqlalchemy import func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -329,6 +330,20 @@ class ActivityRepository(CRUDRepository):  # noqa: D101
     @classmethod
     async def create(cls, session: AsyncSession, model: BaseModel) -> Activity:  # noqa: D102
         activity_data = model.dict()
+
+        if activity_data.get("parent_id"):
+            parent_activity = await cls.get(session, activity_data["parent_id"])
+            if parent_activity:
+                if parent_activity.level >= 2:
+                    raise HTTPException(
+                        status_code=400, detail="Maximum nesting level is 3"
+                    )
+                activity_data["level"] = parent_activity.level + 1
+            else:
+                raise HTTPException(status_code=404, detail="Parent activity not found")
+        else:
+            activity_data["level"] = 0
+
         activity = Activity(**activity_data)
         session.add(activity)
         await commit_process_session(session, activity)

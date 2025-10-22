@@ -4,6 +4,7 @@ from datetime import datetime
 
 import uvicorn
 from fastapi import Depends, FastAPI, Header, HTTPException
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from orghandbookapi.database.database import db_manager, url
 from orghandbookapi.database.models.base import Base
@@ -23,6 +24,15 @@ async def lifespan(app: FastAPI):
 
     yield
     await db_manager.close()
+
+
+async def get_db_session() -> AsyncSession:
+    """Зависимость для получения сессии БД."""
+    async with db_manager.session() as session:
+        try:
+            yield session
+        finally:
+            await session.close()
 
 
 async def verify_api_key(x_api_key: str = Header(...)) -> str:

@@ -77,3 +77,19 @@ class DatabaseSessionManager:  # noqa: D101
 
 
 db_manager = DatabaseSessionManager()
+
+
+async def get_db_session() -> AsyncSession:
+    """
+    Функция-зависимость для получения асинхронной сессии базы данных.
+
+    Returns:
+        AsyncSession: асинхронная сессия
+
+    Yields:
+        Iterator[AsyncSession]: итератор асинхронной сессии
+
+    """
+    async with db_manager.session() as session:
+        yield session
+

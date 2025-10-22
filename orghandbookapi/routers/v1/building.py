@@ -1,7 +1,7 @@
-from dishka.integrations.fastapi import FromDishka
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from orghandbookapi.database.database import get_db_session
 from orghandbookapi.database.models.repositories import BuildingRepository
 from orghandbookapi.schemas.building import (
     Building,
@@ -17,20 +17,8 @@ building_router = APIRouter()
 async def get_buildings(
     skip: int = 0,
     limit: int = 100,
-    session: FromDishka[AsyncSession] = Depends(),  # noqa: B008
+    session: AsyncSession = Depends(get_db_session),
 ) -> list[Building]:
-    """
-    Маршрут получения зданий.
-
-    Args:
-        skip (int, optional): пропуск.
-        limit (int, optional): лимит.
-        session (FromDishka[AsyncSession], optional): сессия бд.
-
-    Returns:
-        list[Building]: список зданий.
-
-    """
     buildings = await BuildingRepository.get_all(session)
     return buildings[skip : skip + limit]
 
@@ -38,22 +26,8 @@ async def get_buildings(
 @building_router.get("/{building_id}", response_model=BuildingWithRelations)
 async def get_building(
     building_id: int,
-    session: FromDishka[AsyncSession] = Depends(),  # noqa: B008
-) -> Building:
-    """
-    Маршрут получения здания.
-
-    Args:
-        building_id (int): ID здания.
-        session (FromDishka[AsyncSession], optional): Сессия БД.
-
-    Raises:
-        HTTPException: здание не найдено.
-
-    Returns:
-        Building: здание.
-
-    """
+    session: AsyncSession = Depends(get_db_session),
+) -> BuildingWithRelations:
     building = await BuildingRepository.get_with_relations(session, building_id)
     if not building:
         raise HTTPException(status_code=404, detail="Building not found")
@@ -63,19 +37,8 @@ async def get_building(
 @building_router.post("/", response_model=Building)
 async def create_building(
     building: BuildingCreate,
-    session: FromDishka[AsyncSession] = Depends(),  # noqa: B008
+    session: AsyncSession = Depends(get_db_session),
 ) -> Building:
-    """
-    Мршраут создания модели здания.
-
-    Args:
-        building (BuildingCreate): Здание.
-        session (FromDishka[AsyncSession], optional): Сессия БД.
-
-    Returns:
-        Building: Здание.
-
-    """
     return await BuildingRepository.create(session, building)
 
 
@@ -83,23 +46,8 @@ async def create_building(
 async def update_building(
     building_id: int,
     building: BuildingUpdate,
-    session: FromDishka[AsyncSession] = Depends(),  # noqa: B008
+    session: AsyncSession = Depends(get_db_session),
 ) -> Building:
-    """
-    Маршрут обновления здания.
-
-    Args:
-        building_id (int): ID здания.
-        building (BuildingUpdate): здание.
-        session (FromDishka[AsyncSession], optional): Сессия БД.
-
-    Raises:
-        HTTPException: здание не найдено.
-
-    Returns:
-        Building: Обновленное здание.
-
-    """
     existing_building = await BuildingRepository.get(session, building_id)
     if not existing_building:
         raise HTTPException(status_code=404, detail="Building not found")
@@ -110,18 +58,7 @@ async def update_building(
 @building_router.delete("/{building_id}")
 async def delete_building(
     building_id: int,
-    session: FromDishka[AsyncSession] = Depends(),  # noqa: B008
+    session: AsyncSession = Depends(get_db_session),
 ) -> dict[str, str]:
-    """
-    Маршрут удаления здания.
-
-    Args:
-        building_id (int): ID здания.
-        session (FromDishka[AsyncSession], optional): Сессия БД.
-
-    Returns:
-        dict[str, str]: ответ сервера
-
-    """
     await BuildingRepository.delete(session, building_id)
     return {"message": "Building deleted"}

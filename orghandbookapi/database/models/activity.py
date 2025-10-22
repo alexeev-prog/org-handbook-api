@@ -21,7 +21,7 @@ class Activity(Base):  # noqa: D101
     )
     children: Mapped[list["Activity"]] = relationship(back_populates="parent")
     organizations: Mapped[list["Organization"]] = relationship(  # noqa: F821
-        "Organization", back_populates="activities"
+        back_populates="activities", secondary="organization_activity"
     )
 
     def __str__(self):  # noqa: D105

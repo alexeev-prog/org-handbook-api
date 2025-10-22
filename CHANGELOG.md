@@ -1,3 +1,9 @@
+commit ac4614d82676cd826d7fd222518c67641e2734cf
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Wed Oct 22 22:48:05 2025 +0700
+
+    fix issues with pydantic schemas and database models
+
 commit 99b82fd65005f43e623d8703df36af86f097696c
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Wed Oct 22 22:22:23 2025 +0700
