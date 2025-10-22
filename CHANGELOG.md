@@ -1,3 +1,9 @@
+commit e916223c591b5e4358b8b55fa63b7cb4108b8270
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Wed Oct 22 23:22:51 2025 +0700
+
+    add noqa (todo: add docstrings)
+
 commit 8a8104f2a9c7632561023f75f44f321f29e5e5c6
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Wed Oct 22 23:20:41 2025 +0700

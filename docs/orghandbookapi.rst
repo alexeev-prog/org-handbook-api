@@ -9,6 +9,7 @@ Subpackages
 
    orghandbookapi.database
    orghandbookapi.routers
+   orghandbookapi.schemas
 
 Submodules
 ----------
@@ -26,15 +27,6 @@ orghandbookapi.config\_loader module
 ------------------------------------
 
 .. automodule:: orghandbookapi.config_loader
-   :members:
-   :private-members:
-   :show-inheritance:
-   :undoc-members:
-
-orghandbookapi.dependencies module
-----------------------------------
-
-.. automodule:: orghandbookapi.dependencies
    :members:
    :private-members:
    :show-inheritance:

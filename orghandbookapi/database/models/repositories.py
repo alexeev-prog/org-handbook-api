@@ -90,7 +90,7 @@ class OrganizationRepository(CRUDRepository):  # noqa: D101
             await commit_process_session(session)
 
     @classmethod
-    async def update(cls, session: AsyncSession, model: BaseModel):  # noqa: D102
+    async def update(cls, session: AsyncSession, model: BaseModel) -> Organization:  # noqa: D102
         update_data = model.dict(exclude_unset=True)
         await session.execute(
             update(Organization)
@@ -98,6 +98,8 @@ class OrganizationRepository(CRUDRepository):  # noqa: D101
             .values(**{k: v for k, v in update_data.items() if k != "id"})
         )
         await commit_process_session(session)
+
+        return await cls.get(session, update_data["id"])
 
     @classmethod
     async def create(cls, session: AsyncSession, model: BaseModel) -> Organization:  # noqa: D102
