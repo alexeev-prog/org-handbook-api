@@ -7,7 +7,7 @@ from .base import Base
 
 
 class Activity(Base):  # noqa: D101
-    __tablename__ = "Activities"
+    __tablename__ = "activities"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String, nullable=False)

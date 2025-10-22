@@ -2,8 +2,6 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-from orghandbookapi.database.models.organization import Organization
-
 
 class ActivityBase(BaseModel):
     """Схема валидации базовой модели вида деятельности."""
@@ -39,7 +37,6 @@ class ActivityWithRelations(Activity):
 
     parent: Optional["Activity"] = None
     children: list["Activity"] = []
-    organizations: list[Organization]
 
 
 class ActivityTree(Activity):

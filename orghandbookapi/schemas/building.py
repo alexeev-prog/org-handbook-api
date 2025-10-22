@@ -1,7 +1,5 @@
 from pydantic import BaseModel
 
-from orghandbookapi.database.models.organization import Organization
-
 
 class BuildingBase(BaseModel):
     """Схема валидации базовой модели здания."""
@@ -35,4 +33,9 @@ class Building(BuildingBase):
 class BuildingWithRelations(Building):
     """Схема валидации модели здания с отношениями."""  # noqa: RUF002
 
-    organizations: list[Organization]
+    organizations: list["Organization"] = []
+
+
+from .organization import Organization  # noqa: E402
+
+BuildingWithRelations.update_forward_refs()

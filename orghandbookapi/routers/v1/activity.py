@@ -2,7 +2,7 @@ from dishka.integrations.fastapi import FromDishka
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from orghandbookapi.database.repositories import ActivityRepository
+from orghandbookapi.database.models.repositories import ActivityRepository
 from orghandbookapi.schemas.activity import (
     Activity,
     ActivityCreate,

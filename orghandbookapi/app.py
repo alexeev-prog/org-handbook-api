@@ -53,15 +53,15 @@ app = FastAPI(
 
 
 @app.get("/health")
-async def health_check() -> dict[str, any]:
+async def health_check() -> dict[str, str]:
     """
     Маршрут для проверки работы API.
 
     Returns:
-        dict[str, any]: ответ сервера
+        dict[str, str]: ответ сервера
 
     """
-    return {"status": "healthy", "timestamp": datetime.utcnow()}  # noqa: DTZ003
+    return {"status": "healthy", "timestamp": datetime.utcnow().isoformat()}  # noqa: DTZ003
 
 
 app.include_router(

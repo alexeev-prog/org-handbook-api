@@ -1,8 +1,5 @@
 from pydantic import BaseModel
 
-from orghandbookapi.database.models.activity import Activity
-from orghandbookapi.database.models.building import Building
-
 
 class PhoneNumberBase(BaseModel):
     """Схема валидации базовой модели номера телефона."""
@@ -50,9 +47,6 @@ class Organization(OrganizationBase):
     """Схема валидации модели организации."""
 
     id: int
-    building: Building
-    phonenumbers: list[PhoneNumber]
-    activities: list[Activity]
 
     class Config:
         from_attributes = True
@@ -61,6 +55,12 @@ class Organization(OrganizationBase):
 class OrganizationWithRelations(Organization):
     """Схема валидации модели организации с отношениями."""  # noqa: RUF002
 
-    building: Building
+    building: "Building"
     phonenumbers: list[PhoneNumber]
-    activities: list[Activity]
+    activities: list["Activity"]
+
+
+from .activity import Activity  # noqa: E402
+from .building import Building  # noqa: E402
+
+OrganizationWithRelations.update_forward_refs()
