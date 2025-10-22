@@ -11,7 +11,7 @@ organization_activity = Table(
 )
 
 
-class Organization(Base):
+class Organization(Base):  # noqa: D101
     __tablename__ = "Organizations"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -26,14 +26,14 @@ class Organization(Base):
         secondary=organization_activity, back_populates="organizations"
     )
 
-    def __str__(self):
+    def __str__(self):  # noqa: D105
         return f"Organization(id={self.id}, name={self.legal_name!r})"
 
-    def __repr__(self):
+    def __repr__(self):  # noqa: D105
         return str(self)
 
 
-class PhoneNumber(Base):
+class PhoneNumber(Base):  # noqa: D101
     __tablename__ = "OrgPhoneNumbers"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -44,8 +44,8 @@ class PhoneNumber(Base):
 
     organization: Mapped["Organization"] = relationship(back_populates="phonenumbers")
 
-    def __str__(self):
+    def __str__(self):  # noqa: D105
         return f"PhoneNumber(id={self.id}, number={self.phone_number!r})"
 
-    def __repr__(self):
+    def __repr__(self):  # noqa: D105
         return str(self)

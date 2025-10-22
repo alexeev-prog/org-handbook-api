@@ -11,23 +11,23 @@ from sqlalchemy.ext.asyncio import (
 
 from orghandbookapi.loader import config
 
-# url = config.database.url_format.format(
-#     host=config.database.host,
-#     port=config.database.port,
-#     name=config.database.name,
-#     user=config.database.user,
-#     password=config.database.password,
-# )
+url = config.database.url_format.format(
+    host=config.database.host,
+    port=config.database.port,
+    name=config.database.name,
+    user=config.database.user,
+    password=config.database.password,
+)
 
 url = "sqlite+aiosqlite:///data/orghandbookapi.db"
 
 
-class DatabaseSessionManager:
-    def __init__(self):
+class DatabaseSessionManager:  # noqa: D101
+    def __init__(self):  # noqa: D107
         self._engine: AsyncEngine | None = None
         self._sessionmaker: async_sessionmaker[AsyncSession] | None = None
 
-    def init(self, db_url: str):
+    def init(self, db_url: str):  # noqa: D102
         if "postgresql" in db_url:
             connect_args = {
                 "statement_cache_size": 0,
@@ -43,7 +43,7 @@ class DatabaseSessionManager:
             bind=self._engine, expire_on_commit=config.database.expire_on_commit
         )
 
-    async def close(self):
+    async def close(self):  # noqa: D102
         if self._engine is None:
             return
 
@@ -52,7 +52,7 @@ class DatabaseSessionManager:
         self._sessionmaker = None
 
     @contextlib.asynccontextmanager
-    async def session(self) -> AsyncIterator[AsyncSession]:
+    async def session(self) -> AsyncIterator[AsyncSession]:  # noqa: D102
         if self._sessionmaker is None:
             raise OSError("DatabaseSessionManager is not initialized")
 
@@ -64,7 +64,7 @@ class DatabaseSessionManager:
                 raise
 
     @contextlib.asynccontextmanager
-    async def connect(self) -> AsyncIterator[AsyncConnection]:
+    async def connect(self) -> AsyncIterator[AsyncConnection]:  # noqa: D102
         if self._engine is None:
             raise OSError("DatabaseSessionManager is not initialized")
 

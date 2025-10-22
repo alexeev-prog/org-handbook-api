@@ -6,8 +6,8 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from .base import Base
 
 
-class Activity(Base):
-    __tablename__ = "activities"
+class Activity(Base):  # noqa: D101
+    __tablename__ = "Activities"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String, nullable=False)
@@ -24,8 +24,8 @@ class Activity(Base):
         "Organization", back_populates="activities"
     )
 
-    def __str__(self):
+    def __str__(self):  # noqa: D105
         return f"Activity(id={self.id}, name={self.name!r}, level={self.level})"
 
-    def __repr__(self):
+    def __repr__(self):  # noqa: D105
         return str(self)

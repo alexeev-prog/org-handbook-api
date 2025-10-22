@@ -9,4 +9,4 @@ api_v1_router.include_router(organizations_router, prefix="/organizations")
 api_v1_router.include_router(activity_router, prefix="/activity")
 api_v1_router.include_router(building_router, prefix="/building")
 
-all = ["api_v1_router"]
+__all__ = ["api_v1_router"]

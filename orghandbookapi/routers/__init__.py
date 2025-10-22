@@ -6,4 +6,4 @@ api_router = APIRouter(prefix="/api")
 
 api_router.include_router(api_v1_router)
 
-all = ["api_router"]
+__all__ = ["api_router"]

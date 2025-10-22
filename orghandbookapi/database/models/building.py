@@ -3,7 +3,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from orghandbookapi.database.models.base import Base
 
 
-class Building(Base):
+class Building(Base):  # noqa: D101
     __tablename__ = "Buildings"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -15,8 +15,8 @@ class Building(Base):
         back_populates="building"
     )
 
-    def __str__(self):
+    def __str__(self):  # noqa: D105
         return f"Building(id={self.id}, address={self.address!r})"
 
-    def __repr__(self):
+    def __repr__(self):  # noqa: D105
         return str(self)

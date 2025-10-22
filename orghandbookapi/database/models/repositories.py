@@ -9,11 +9,11 @@ from sqlalchemy.orm import selectinload
 from orghandbookapi.database.models.activity import Activity
 from orghandbookapi.database.models.base import Base
 from orghandbookapi.database.models.building import Building
-from orghandbookapi.database.models.organization import Organization
+from orghandbookapi.database.models.organization import Organization, PhoneNumber
 
 
-async def commit_process_session(
-    session: AsyncSession, candidate: Any = None, flush: bool = False
+async def commit_process_session(  # noqa: D103
+    session: AsyncSession, candidate: Any = None, *, flush: bool = False
 ):
     if flush:
         await session.flush()
@@ -24,49 +24,51 @@ async def commit_process_session(
         await session.refresh(candidate)
 
 
-class CRUDRepository(ABC):
+class CRUDRepository(ABC):  # noqa: D101
     @classmethod
     @abstractmethod
-    async def get(cls, session: AsyncSession, id: int) -> Base | None:
+    async def get(cls, session: AsyncSession, id: int) -> Base | None:  # noqa: A002, D102
         raise NotImplementedError
 
     @classmethod
     @abstractmethod
-    async def get_with_relations(cls, session: AsyncSession, id: int) -> Base | None:
+    async def get_with_relations(cls, session: AsyncSession, id: int) -> Base | None:  # noqa: A002, D102
         raise NotImplementedError
 
     @classmethod
     @abstractmethod
-    async def delete(cls, session: AsyncSession, id: int):
+    async def delete(cls, session: AsyncSession, id: int):  # noqa: A002, D102
         raise NotImplementedError
 
     @classmethod
     @abstractmethod
-    async def update(cls, session: AsyncSession, model: BaseModel):
+    async def update(cls, session: AsyncSession, model: BaseModel):  # noqa: D102
         raise NotImplementedError
 
     @classmethod
     @abstractmethod
-    async def create(cls, session: AsyncSession, model: BaseModel) -> Base:
+    async def create(cls, session: AsyncSession, model: BaseModel) -> Base:  # noqa: D102
         raise NotImplementedError
 
     @classmethod
     @abstractmethod
-    async def get_all(cls, session: AsyncSession) -> list[Base]:
+    async def get_all(cls, session: AsyncSession) -> list[Base]:  # noqa: D102
         raise NotImplementedError
 
 
-class OrganizationRepository(CRUDRepository):
+class OrganizationRepository(CRUDRepository):  # noqa: D101
     @classmethod
-    async def get(cls, session: AsyncSession, id: int) -> Base | None:
+    async def get(cls, session: AsyncSession, id: int) -> Base | None:  # noqa: A002, D102
         result = await session.execute(
             select(Organization).where(Organization.id == id)
         )
         return result.scalar_one_or_none()
 
     @classmethod
-    async def get_with_relations(
-        cls, session: AsyncSession, id: int
+    async def get_with_relations(  # noqa: D102
+        cls,
+        session: AsyncSession,
+        id: int,  # noqa: A002
     ) -> Organization | None:
         result = await session.execute(
             select(Organization)
@@ -80,14 +82,14 @@ class OrganizationRepository(CRUDRepository):
         return result.scalar_one_or_none()
 
     @classmethod
-    async def delete(cls, session: AsyncSession, id: int):
+    async def delete(cls, session: AsyncSession, id: int):  # noqa: A002, D102
         organization = await cls.get(session, id)
         if organization:
             await session.delete(organization)
             await commit_process_session(session)
 
     @classmethod
-    async def update(cls, session: AsyncSession, model: BaseModel):
+    async def update(cls, session: AsyncSession, model: BaseModel):  # noqa: D102
         update_data = model.dict(exclude_unset=True)
         await session.execute(
             update(Organization)
@@ -97,20 +99,34 @@ class OrganizationRepository(CRUDRepository):
         await commit_process_session(session)
 
     @classmethod
-    async def create(cls, session: AsyncSession, model: BaseModel) -> Organization:
-        organization_data = model.dict()
+    async def create(cls, session: AsyncSession, model: BaseModel) -> Organization:  # noqa: D102
+        organization_data = model.dict(exclude={"phone_numbers", "activity_ids"})
         organization = Organization(**organization_data)
         session.add(organization)
+        await session.flush()  # Получаем ID
+
+        # Создаем телефонные номера
+        for phone in model.phone_numbers:
+            phone_obj = PhoneNumber(phone_number=phone, organization_id=organization.id)
+            session.add(phone_obj)
+
+        # Добавляем деятельности
+        if model.activity_ids:
+            stmt = select(Activity).where(Activity.id.in_(model.activity_ids))
+            result = await session.execute(stmt)
+            activities = result.scalars().all()
+            organization.activities.extend(activities)
+
         await commit_process_session(session, organization)
         return organization
 
     @classmethod
-    async def get_all(cls, session: AsyncSession) -> list[Organization]:
+    async def get_all(cls, session: AsyncSession) -> list[Organization]:  # noqa: D102
         result = await session.execute(select(Organization))
         return result.scalars().all()
 
     @classmethod
-    async def get_by_building(
+    async def get_by_building(  # noqa: D102
         cls, session: AsyncSession, building_id: int
     ) -> list[Organization]:
         result = await session.execute(
@@ -125,7 +141,7 @@ class OrganizationRepository(CRUDRepository):
         return result.scalars().all()
 
     @classmethod
-    async def get_by_activity(
+    async def get_by_activity(  # noqa: D102
         cls, session: AsyncSession, activity_id: int
     ) -> list[Organization]:
         activities_cte = (
@@ -155,7 +171,7 @@ class OrganizationRepository(CRUDRepository):
         return result.scalars().all()
 
     @classmethod
-    async def search_by_name(
+    async def search_by_name(  # noqa: D102
         cls, session: AsyncSession, name: str
     ) -> list[Organization]:
         result = await session.execute(
@@ -170,7 +186,7 @@ class OrganizationRepository(CRUDRepository):
         return result.scalars().all()
 
     @classmethod
-    async def get_in_radius(
+    async def get_in_radius(  # noqa: D102
         cls, session: AsyncSession, lat: float, lon: float, radius_km: float
     ) -> list[Organization]:
         distance = (
@@ -196,7 +212,7 @@ class OrganizationRepository(CRUDRepository):
         return result.scalars().all()
 
     @classmethod
-    async def get_in_rectangular_area(
+    async def get_in_rectangular_area(  # noqa: D102
         cls,
         session: AsyncSession,
         min_lat: float,
@@ -220,15 +236,17 @@ class OrganizationRepository(CRUDRepository):
         return result.scalars().all()
 
 
-class BuildingRepository(CRUDRepository):
+class BuildingRepository(CRUDRepository):  # noqa: D101
     @classmethod
-    async def get(cls, session: AsyncSession, id: int) -> Base | None:
+    async def get(cls, session: AsyncSession, id: int) -> Base | None:  # noqa: A002, D102
         result = await session.execute(select(Building).where(Building.id == id))
         return result.scalar_one_or_none()
 
     @classmethod
-    async def get_with_relations(
-        cls, session: AsyncSession, id: int
+    async def get_with_relations(  # noqa: D102
+        cls,
+        session: AsyncSession,
+        id: int,  # noqa: A002
     ) -> Building | None:
         result = await session.execute(
             select(Building)
@@ -238,14 +256,14 @@ class BuildingRepository(CRUDRepository):
         return result.scalar_one_or_none()
 
     @classmethod
-    async def delete(cls, session: AsyncSession, id: int):
+    async def delete(cls, session: AsyncSession, id: int):  # noqa: A002, D102
         building = await cls.get(session, id)
         if building:
             await session.delete(building)
             await commit_process_session(session)
 
     @classmethod
-    async def update(cls, session: AsyncSession, model: BaseModel):
+    async def update(cls, session: AsyncSession, model: BaseModel):  # noqa: D102
         update_data = model.dict(exclude_unset=True)
         await session.execute(
             update(Building)
@@ -255,7 +273,7 @@ class BuildingRepository(CRUDRepository):
         await commit_process_session(session)
 
     @classmethod
-    async def create(cls, session: AsyncSession, model: BaseModel) -> Building:
+    async def create(cls, session: AsyncSession, model: BaseModel) -> Building:  # noqa: D102
         building_data = model.dict()
         building = Building(**building_data)
         session.add(building)
@@ -263,20 +281,22 @@ class BuildingRepository(CRUDRepository):
         return building
 
     @classmethod
-    async def get_all(cls, session: AsyncSession) -> list[Building]:
+    async def get_all(cls, session: AsyncSession) -> list[Building]:  # noqa: D102
         result = await session.execute(select(Building))
         return result.scalars().all()
 
 
-class ActivityRepository(CRUDRepository):
+class ActivityRepository(CRUDRepository):  # noqa: D101
     @classmethod
-    async def get(cls, session: AsyncSession, id: int) -> Base | None:
+    async def get(cls, session: AsyncSession, id: int) -> Base | None:  # noqa: A002, D102
         result = await session.execute(select(Activity).where(Activity.id == id))
         return result.scalar_one_or_none()
 
     @classmethod
-    async def get_with_relations(
-        cls, session: AsyncSession, id: int
+    async def get_with_relations(  # noqa: D102
+        cls,
+        session: AsyncSession,
+        id: int,  # noqa: A002
     ) -> Activity | None:
         result = await session.execute(
             select(Activity)
@@ -290,14 +310,14 @@ class ActivityRepository(CRUDRepository):
         return result.scalar_one_or_none()
 
     @classmethod
-    async def delete(cls, session: AsyncSession, id: int):
+    async def delete(cls, session: AsyncSession, id: int):  # noqa: A002, D102
         activity = await cls.get(session, id)
         if activity:
             await session.delete(activity)
             await commit_process_session(session)
 
     @classmethod
-    async def update(cls, session: AsyncSession, model: BaseModel):
+    async def update(cls, session: AsyncSession, model: BaseModel):  # noqa: D102
         update_data = model.dict(exclude_unset=True)
         await session.execute(
             update(Activity)
@@ -307,7 +327,7 @@ class ActivityRepository(CRUDRepository):
         await commit_process_session(session)
 
     @classmethod
-    async def create(cls, session: AsyncSession, model: BaseModel) -> Activity:
+    async def create(cls, session: AsyncSession, model: BaseModel) -> Activity:  # noqa: D102
         activity_data = model.dict()
         activity = Activity(**activity_data)
         session.add(activity)
@@ -315,12 +335,12 @@ class ActivityRepository(CRUDRepository):
         return activity
 
     @classmethod
-    async def get_all(cls, session: AsyncSession) -> list[Activity]:
+    async def get_all(cls, session: AsyncSession) -> list[Activity]:  # noqa: D102
         result = await session.execute(select(Activity))
         return result.scalars().all()
 
     @classmethod
-    async def get_tree(
+    async def get_tree(  # noqa: D102
         cls, session: AsyncSession, parent_id: int | None = None
     ) -> list[Activity]:
         if parent_id is None:
