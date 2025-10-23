@@ -241,7 +241,7 @@ API маршруты
 1. Установка зависимостей
 
    .. code-block:: bash
-
+ 
       pip install uv
       uv sync
 

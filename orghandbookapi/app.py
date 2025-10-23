@@ -71,7 +71,10 @@ async def health_check() -> dict[str, str]:
         dict[str, str]: ответ сервера
 
     """
-    return {"status": "healthy", "timestamp": datetime.utcnow().isoformat()}  # noqa: DTZ003
+    return {
+        "status": "healthy",
+        "timestamp": datetime.utcnow().isoformat(),  # noqa: DTZ003
+    }
 
 
 app.include_router(
