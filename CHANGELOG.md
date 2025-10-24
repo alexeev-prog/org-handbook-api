@@ -1,3 +1,9 @@
+commit cf178dcefb2cfd9af5c1a043dd011bde7fff2bc5
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Fri Oct 24 22:35:28 2025 +0700
+
+    fix bugs with activities in organization model; fix dockerfile and utils
+
 commit 680b2724f473b39a190b268824ef0bc1fb718daf
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Thu Oct 23 20:17:09 2025 +0700

@@ -6,8 +6,10 @@ from orghandbookapi.database.models.base import Base
 organization_activity = Table(
     "organization_activity",
     Base.metadata,
-    Column("organization_id", Integer, ForeignKey("Organizations.id")),
-    Column("activity_id", Integer, ForeignKey("activities.id")),
+    Column(
+        "organization_id", Integer, ForeignKey("Organizations.id"), primary_key=True
+    ),
+    Column("activity_id", Integer, ForeignKey("activities.id"), primary_key=True),
 )
 
 

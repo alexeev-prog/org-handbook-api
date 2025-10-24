@@ -3,14 +3,18 @@ from typing import Any
 
 from fastapi import HTTPException
 from pydantic import BaseModel
-from sqlalchemy import func, select, update
+from sqlalchemy import func, insert, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from orghandbookapi.database.models.activity import Activity
 from orghandbookapi.database.models.base import Base
 from orghandbookapi.database.models.building import Building
-from orghandbookapi.database.models.organization import Organization, PhoneNumber
+from orghandbookapi.database.models.organization import (
+    Organization,
+    PhoneNumber,
+    organization_activity,
+)
 
 
 async def commit_process_session(  # noqa: D103
@@ -113,10 +117,13 @@ class OrganizationRepository(CRUDRepository):  # noqa: D101
             session.add(phone_obj)
 
         if model.activity_ids:
-            stmt = select(Activity).where(Activity.id.in_(model.activity_ids))
-            result = await session.execute(stmt)
-            activities = result.scalars().all()
-            organization.activities = activities
+            stmt = insert(organization_activity).values(
+                [
+                    {"organization_id": organization.id, "activity_id": activity_id}
+                    for activity_id in model.activity_ids
+                ]
+            )
+            await session.execute(stmt)
 
         await commit_process_session(session, organization)
         return organization

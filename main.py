@@ -339,7 +339,8 @@ def organizations_search_radius(ctx):
     lon = click.prompt("Longitude", type=float)
     radius_km = click.prompt("Radius (km)", type=float)
 
-    result = asyncio.run(client.get_organizations_in_radius(lat, lon, radius_km))
+    result = asyncio.run(
+        client.get_organizations_in_radius(lat, lon, radius_km))
     print_json(result)
 
 
