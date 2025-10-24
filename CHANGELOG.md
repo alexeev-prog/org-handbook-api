@@ -1,3 +1,9 @@
+commit e3f08963cb1b192af0acaf73b058052fdb53639f
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Sat Oct 25 00:11:43 2025 +0700
+
+    update codestyle, fix bugs with organization creation
+
 commit cf178dcefb2cfd9af5c1a043dd011bde7fff2bc5
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Fri Oct 24 22:35:28 2025 +0700

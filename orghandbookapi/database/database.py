@@ -19,7 +19,7 @@ url = config.database.url_format.format(
     password=config.database.password,
 )
 
-url = "sqlite+aiosqlite:///data/orghandbookapi.db"
+# url = "sqlite+aiosqlite:///data/orghandbookapi.db"  # noqa: ERA001
 
 
 class DatabaseSessionManager:  # noqa: D101

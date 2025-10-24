@@ -64,6 +64,35 @@ Org-Handbook-API — это современный асинхронный RESTfu
 4. **Доступ к документации API**
    Откройте в браузере: `http://localhost:8000/docs`
 
+### Утилита для автоматизации
+Запустите main.py, если хотите протестировать API, заполнить тестовыми данными или осуществлять взаимодействие через скрипт:
+
+```bash
+ $ python3 main.py
+
+Usage: main.py [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --base-url TEXT  Base API URL
+  --api-key TEXT   API Key
+  --help           Show this message and exit.
+
+Commands:
+  activities
+  buildings
+  health
+  organizations
+  seed
+```
+
+ + `--base-url` - базовый URL запущенного API (например `http://0.0.0.0:8000`)
+ + `--api-key` - статичный токен (по умолчанию `secret-static-api-key`)
+ + `activities` - манипуляции с видами деятельности
+ + `buildings` - манипуляции с видами зданий
+ + `health` - проверка работы сервера
+ + `organizations` - манипуляция с организациями
+ + `seed` - заполнение тестовыми данными
+
 ## Модели данных
 
 ### Организация (`Organization`)
@@ -252,9 +281,6 @@ ruff check .
 
 # Форматирование
 ruff format .
-
-# Типизация
-mypy orghandbookapi
 ```
 
 ## Технологический стек
