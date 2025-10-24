@@ -73,7 +73,7 @@ Build: {self.build}
 Standard: {self.standard}
 Commit: {self.commit}
 
-KintsugiOS {self.full} {self.commit_hash}
+org-handbook-api {self.full} {self.commit_hash}
 """
 
 

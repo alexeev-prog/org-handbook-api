@@ -20,10 +20,10 @@ class Organization(Base):  # noqa: D101
 
     building: Mapped["Building"] = relationship(back_populates="organizations")  # noqa: F821
     phonenumbers: Mapped[list["PhoneNumber"]] = relationship(
-        back_populates="organization"
+        back_populates="organization", cascade="all, delete-orphan"
     )
     activities: Mapped[list["Activity"]] = relationship(  # noqa: F821
-        secondary=organization_activity, back_populates="organizations"
+        secondary=organization_activity, back_populates="organizations", lazy="selectin"
     )
 
     def __str__(self):  # noqa: D105

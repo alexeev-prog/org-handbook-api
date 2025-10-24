@@ -26,7 +26,7 @@ All contributors must adhere to our Code of Conduct. Please read [CODE_OF_CONDUC
 3. Implement your changes
 4. Add tests covering all new functionality
 5. Ensure 85-100% test coverage
-6. Format code with Black (`black .`)
+6. Format code with Ruff (`ruff format .`)
 7. Submit a pull request
 
 ## Development Setup

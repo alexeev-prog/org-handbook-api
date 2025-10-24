@@ -1,3 +1,9 @@
+commit 680b2724f473b39a190b268824ef0bc1fb718daf
+Author: Alexeev Bronislav <alexeev.dev@mail.ru>
+Date:   Thu Oct 23 20:17:09 2025 +0700
+
+    update codestyle, docs and add utility for testing
+
 commit 154f4687a3efca9c64d552fac87c5c93d441f08b
 Author: Alexeev Bronislav <alexeev.dev@mail.ru>
 Date:   Wed Oct 22 23:50:41 2025 +0700

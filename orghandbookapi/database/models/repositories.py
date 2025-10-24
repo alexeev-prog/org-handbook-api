@@ -106,19 +106,17 @@ class OrganizationRepository(CRUDRepository):  # noqa: D101
         organization_data = model.dict(exclude={"phone_numbers", "activity_ids"})
         organization = Organization(**organization_data)
         session.add(organization)
-        await session.flush()  # Получаем ID
+        await session.flush()
 
-        # Создаем телефонные номера
         for phone in model.phone_numbers:
             phone_obj = PhoneNumber(phone_number=phone, organization_id=organization.id)
             session.add(phone_obj)
 
-        # Добавляем деятельности
         if model.activity_ids:
             stmt = select(Activity).where(Activity.id.in_(model.activity_ids))
             result = await session.execute(stmt)
             activities = result.scalars().all()
-            organization.activities.extend(activities)
+            organization.activities = activities
 
         await commit_process_session(session, organization)
         return organization

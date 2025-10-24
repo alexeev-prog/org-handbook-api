@@ -219,14 +219,16 @@ X-API-Key: secret-static-api-key
 
    [security]
    api_key = "your-development-api-key"
+   api_key_header = "X-API-Key"
+
    ```
 
-3. **Запуск миграций базы данных**
+1. **Запуск миграций базы данных**
    ```bash
    alembic upgrade head
    ```
 
-4. **Запуск сервера для разработки**
+2. **Запуск сервера для разработки**
    ```bash
    uvicorn orghandbookapi.app:app --reload --host 0.0.0.0 --port 8000
    ```
